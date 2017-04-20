@@ -1,0 +1,49 @@
+<html>
+<head>
+  <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+<head>
+<TABLE cellpadding="4" style="border: 1px solid #000000; border-collapse: collapse;" border="1">
+ <TR>
+  <TH>Name</TH>
+  <TH>Price</TH>
+  <TH>Description</TH>
+  <TH>Calories</TH>
+ </TR>
+ <TR>
+  <TD>Strawberry Belgian Waffles</TD>
+  <TD>$7.95</TD>
+  <TD>
+Light Belgian waffles covered with strawberries and whipped cream </TD>
+  <TD>900</TD>
+ </TR>
+ <TR>
+ </TR>
+ <TR>
+  <TD bgcolor="red">Berry-Berry Belgian Waffles</TD>
+  <TD bgcolor="red">$8.95</TD>
+  <TD bgcolor="red">
+Light Belgian waffles covered with an assortment of fresh berries and whipped cream </TD>
+  <TD bgcolor="red">900</TD>
+ </TR>
+ <TR>
+  <TD>Homestyle Breakfast</TD>
+  <TD>$6.95</TD>
+  <TD>
+Two eggs, bacon or sausage, toast, and our ever-popular hash browns </TD>
+  <TD>950</TD>
+ </TR>
+ </TABLE>
+ 
+
+ <body>
+  
+  <p>Click <a href="/logout">here</a> to logout.</p>
+
+       {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
+
+  </body>
+
+
+</html>

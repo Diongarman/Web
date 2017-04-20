@@ -1,0 +1,4 @@
+AAPL
+SPY
+GOOG
+NFLX
