@@ -3,13 +3,15 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import View
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import numpy as np
 import pandas as pd
 
+#json formatting
+import json
 
 User = get_user_model()
 
@@ -45,7 +47,7 @@ class ChartData(APIView):
         return Response(data)
 
 df = pd.read_csv('/Users/diongarman/PycharmProjects/Django-Chart.js-9deb1d489250aca706b9939ae0bad331d0709982/src/pokemon-sun-and-moon-gen-7-stats/pokemon.csv', header=None)
-dataset = df.values.tolist()
+dataset = df.fillna('N/A').values.tolist() #fillna() function avoids invalid data being passed by view
 
 class TableData(APIView):
 
@@ -53,11 +55,19 @@ class TableData(APIView):
     permission_classes = []
 
     def get(self, request, format=None):
-        columns = list(dataset[0])
-        pokemon = list(dataset[1])
+        pokemon = dataset[1:3]
+
+        columns = json.dumps(dataset[0])
+        pokemon = json.dumps(dataset[1:])
+
+
         data = {
-            "columns": columns,
             "data": pokemon,
+            "columns": columns
         }
-        print data['pokemon']
-        return JsonResponse(data)
+
+        print(type(pokemon))
+        print(type(columns))
+
+
+        return Response(data)

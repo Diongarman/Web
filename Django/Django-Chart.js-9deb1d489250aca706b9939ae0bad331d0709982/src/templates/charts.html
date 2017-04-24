@@ -2,6 +2,7 @@
 
 <script>
 
+
 {% block jquery %}
 var endpoint =  'api/chart/data/';
 var table_endpoint =  'api/table/data/';
@@ -12,6 +13,7 @@ $.ajax({
     url: endpoint,
     success: function(data){
         console.log('charts work');
+        console.log(typeof(data));
         labels = data.labels;
         defaultData = data.default;
         console.log(defaultData);
@@ -28,12 +30,23 @@ $.ajax({
 $.ajax({
     method:"GET",
     url: table_endpoint,
+    dataType: "json",
+
     success: function(data){
-        console.log('success bro')
-        columns = data.columns;
-        pokemon = data.data;
+        console.log('table works')
+
+        pokemon = data['data'].replace(/\\n/g, "\\n")
+               .replace(/\\'/g, "\\'")
+               .replace(/\\"/g, '\\"')
+               .replace(/\\&/g, "\\&")
+               .replace(/\\r/g, "\\r")
+               .replace(/\\t/g, "\\t")
+               .replace(/\\b/g, "\\b")
+               .replace(/\\f/g, "\\f");
+        pokemon = JSON.parse(pokemon.replace(/[\u0000-\u0019]+/g,""));
         console.log(pokemon);
-        setDataTable(columns, pokemon);
+        console.log(typeof(pokemon));
+        setDataTable();
 
     },
     error: function(error_data) {
@@ -122,10 +135,39 @@ function setBarChart() {
     });
 }
 
-function setDataTable(cols, pokes) {
+function setDataTable() {
     $('#example').DataTable({
-        data: pokes, <!-- trying to use the passed in variable-->
-        columns: [],
+        data: pokemon, <!-- trying to use the passed in variable-->
+        columns: [
+                        { title: "Name" },
+            { title: "Position" },
+            { title: "Office" },
+            { title: "Extn." },
+            { title: "Start date" },
+            { title: "Salary" },
+                        { title: "Name1" },
+            { title: "Position1" },
+            { title: "Office1" },
+            { title: "Extn.1" },
+            { title: "Start date1" },
+            { title: "Salary1" },
+                        { title: "Name2" },
+            { title: "Position2" },
+            { title: "Office2" },
+            { title: "Extn.2" },
+            { title: "Start date2" },
+            { title: "Salary2" },
+                        { title: "Name3" },
+            { title: "Position3" },
+            { title: "Office3" },
+            { title: "Extn.3" },
+            { title: "Start date3" },
+            { title: "Salary3" }
+
+
+            ],
+        scrollX: true
+
 
     })
 }
