@@ -4,173 +4,233 @@
 
 
 {% block jquery %}
-var endpoint =  'api/chart/data/';
-var table_endpoint =  'api/table/data/';
+    var type_endpoint =  'api/pokemon_chart/data/';
+    var table_endpoint =  'api/table/data/';
 
+    function addBackgroundColors(chartConfig) {
+        if (chartConfig && chartConfig.data && chartConfig.data.datasets) {
+            labels = chartConfig.data.labels;
+            for (var i in labels) {
+                if (labels[i] == 'Grass') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(142, 215, 82, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(142, 215, 82, .6)');
+                } else if (labels[i] == 'Fire') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(249, 86, 67, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(249, 86, 67, .6)');
 
-$.ajax({
-    method:"GET",
-    url: endpoint,
-    success: function(data){
-        console.log('charts work');
-        console.log(typeof(data));
-        labels = data.labels;
-        defaultData = data.default;
-        console.log(defaultData);
-        setPolarChart();
-        setBarChart();
+                }  else if (labels[i] == 'Water') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(83, 175, 254, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(83, 175, 254, .6)');
 
-    },
-    error: function(error_data) {
-        console.log("error");
-        console.log(error_data);
-    }
-});
+                } else if (labels[i] == 'Bug') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(195, 210, 33, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(195, 210, 33, .6)');
 
-$.ajax({
-    method:"GET",
-    url: table_endpoint,
-    dataType: "json",
+                } else if (labels[i] == 'Normal') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(187, 189, 175, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(187, 189, 175, .6)');
 
-    success: function(data){
-        console.log('table works')
+                } else if (labels[i] == 'Poison') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(173, 92, 162, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(173, 92, 162, .6)');
 
-        pokemon = data['data'].replace(/\\n/g, "\\n")
-               .replace(/\\'/g, "\\'")
-               .replace(/\\"/g, '\\"')
-               .replace(/\\&/g, "\\&")
-               .replace(/\\r/g, "\\r")
-               .replace(/\\t/g, "\\t")
-               .replace(/\\b/g, "\\b")
-               .replace(/\\f/g, "\\f");
-        pokemon = JSON.parse(pokemon.replace(/[\u0000-\u0019]+/g,""));
-        console.log(pokemon);
-        console.log(typeof(pokemon));
-        setDataTable();
+                } else if (labels[i] == 'Electric') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(248, 230, 78, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(248, 230, 78, .6)');
 
-    },
-    error: function(error_data) {
-        console.log("error");
-        console.log(error_data);
-    }
-});
+                } else if (labels[i] == 'Ground') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(240, 202, 66, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(240, 202, 66, .6)');
 
+                } else if (labels[i] == 'Fairy') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(249, 174, 254, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(249, 174, 254, .6)');
 
-function setPolarChart() {
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'polarArea',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: '# of Votes',
-                data: defaultData,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
+                } else if (labels[i] == 'Fighting') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(163, 84, 73, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(163, 84, 73, .6)');
+
+                } else if (labels[i] == 'Psychic') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(251, 97, 180, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(251, 97, 180, .6)');
+
+                } else if (labels[i] == 'Rock') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(205, 189, 114, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(205, 189, 114, .6)');
+
+                } else if (labels[i] == 'Ghost') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgb(118, 115, 218)');
+                    chartConfig.data.datasets[0].borderColor.push('rgb(118, 115, 218)');
+
+                } else if (labels[i] == 'Ice') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgb(102, 235, 255)');
+                    chartConfig.data.datasets[0].borderColor.push('rgb(102, 235, 255)');
+
+                }
+                else if (labels[i] == 'Dragon') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(139, 118, 255, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(139, 118, 255, .6)');
+
+                } else if (labels[i] == 'Dark') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(142, 104, 86, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(142, 104, 86, .6)');
+
+                } else if (labels[i] == 'Steel') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(195, 193, 215, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(195, 193, 215, .6)');
+
+                } else if (labels[i] == 'Flying') {
+                    chartConfig.data.datasets[0].backgroundColor.push('rgba(117, 164, 249, .6)');
+                    chartConfig.data.datasets[0].borderColor.push('rgba(117, 164, 249, .6)');
+
+                }
             }
         }
-    });
-}
-function setBarChart() {
-    var ctx = document.getElementById("myChart2");
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: '# of Votes',
-                data: defaultData,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
+        return chartConfig;
+    }
+
+    $.ajax({
+        method:"GET",
+        url: type_endpoint,
+        success: function(data){
+            labels = data.types;
+            defaultData = data.type_counts;
+            chartConfig = {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Type Counts',
+                            data: defaultData,
+                            backgroundColor: [
+
+
+                            ],
+                            borderColor: [
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                  options: {
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              beginAtZero: true
+                            }
+                          }]
+                        }
+                      }
+                };
+            polarChartConfig = {
+            type: 'polarArea',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Type Counts',
+                    data: defaultData,
+                    backgroundColor: [
+
+                    ],
+                    borderColor: [
+
+                    ],
+                    borderWidth: 1
                 }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
             }
         }
+            chartConfigUpdate = addBackgroundColors(chartConfig);
+            polarChartConfigUpdate = addBackgroundColors(polarChartConfig);
+            setPolarChart(polarChartConfigUpdate);
+            setBarChart(chartConfigUpdate);
+
+        },
+        error: function(error_data) {
+            console.log("error");
+            console.log(error_data);
+        }
     });
-}
+    $.ajax({
+        method:"GET",
+        url: table_endpoint,
+        dataType: "json",
 
-function setDataTable() {
-    $('#example').DataTable({
-        data: pokemon, <!-- trying to use the passed in variable-->
-        columns: [
-                        { title: "Name" },
-            { title: "Position" },
-            { title: "Office" },
-            { title: "Extn." },
-            { title: "Start date" },
-            { title: "Salary" },
-                        { title: "Name1" },
-            { title: "Position1" },
-            { title: "Office1" },
-            { title: "Extn.1" },
-            { title: "Start date1" },
-            { title: "Salary1" },
-                        { title: "Name2" },
-            { title: "Position2" },
-            { title: "Office2" },
-            { title: "Extn.2" },
-            { title: "Start date2" },
-            { title: "Salary2" },
-                        { title: "Name3" },
-            { title: "Position3" },
-            { title: "Office3" },
-            { title: "Extn.3" },
-            { title: "Start date3" },
-            { title: "Salary3" }
+        success: function(data){
+            console.log('table works')
+
+            pokemon = data['data'].replace(/\\n/g, "\\n")
+                   .replace(/\\'/g, "\\'")
+                   .replace(/\\"/g, '\\"')
+                   .replace(/\\&/g, "\\&")
+                   .replace(/\\r/g, "\\r")
+                   .replace(/\\t/g, "\\t")
+                   .replace(/\\b/g, "\\b")
+                   .replace(/\\f/g, "\\f");
+            pokemon = JSON.parse(pokemon.replace(/[\u0000-\u0019]+/g,""));
+            console.log(pokemon);
+            console.log(typeof(pokemon));
+            setDataTable();
+
+        },
+        error: function(error_data) {
+            console.log("error");
+            console.log(error_data);
+        }
+    });
+
+    function setPolarChart(config) {
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, config);
+    }
+    function setBarChart(config) {
+        var ctx = document.getElementById("myChart2");
+        var myChart = new Chart(ctx, config);
+    }
+    function setDataTable() {
+        $('#example').DataTable({
+            data: pokemon, <!-- trying to use the passed in variable-->
+            columns: [
+                            { title: "Name" },
+                { title: "Position" },
+                { title: "Office" },
+                { title: "Extn." },
+                { title: "Start date" },
+                { title: "Salary" },
+                            { title: "Name1" },
+                { title: "Position1" },
+                { title: "Office1" },
+                { title: "Extn.1" },
+                { title: "Start date1" },
+                { title: "Salary1" },
+                            { title: "Name2" },
+                { title: "Position2" },
+                { title: "Office2" },
+                { title: "Extn.2" },
+                { title: "Start date2" },
+                { title: "Salary2" },
+                            { title: "Name3" },
+                { title: "Position3" },
+                { title: "Office3" },
+                { title: "Extn.3" },
+                { title: "Start date3" },
+                { title: "Salary3" }
 
 
-            ],
-        scrollX: true
+                ],
+            scrollX: true
 
 
-    })
-}
+        })
+    }
 
 {% endblock %}
 
@@ -178,27 +238,23 @@ function setDataTable() {
 </script>
 
 {% block content %}
+    <section>
+        <table id="example" class="display" cellspacing="0" width="100%">
 
-<div class='row'>
-    <div class='col-sm-12'>
-        <h1>Hello World</h1>
-        <div class="col-sm-6">
-            <canvas id="myChart" width="400" height="400"></canvas>
+        </table>
+    </section>
+
+    <div class='row'>
+        <div class='col-sm-12'>
+            <h1>Type Counts</h1>
+            <div class="col-sm-6">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+            <div class="col-sm-6">
+                <canvas id="myChart2" width="400" height="400"></canvas>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <canvas id="myChart2" width="400" height="400"></canvas>
-        </div>
+
     </div>
-
-</div>
-
-
-
-<section>
-    <table id="example" class="display" cellspacing="0" width="100%">
-
-
-    </table>
-</section>
 
 {% endblock content %}
