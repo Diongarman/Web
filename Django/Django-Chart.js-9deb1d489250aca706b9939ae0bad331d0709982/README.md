@@ -8,5 +8,5 @@ The project is being developed continuously; for those who are interested the ma
 
 I will eventually tidy things up and take the javascript out of charts.html.
 
-![Alt text](/screen-shots/chart.png?raw=true)
-![Alt text](/screen-shots/table.png?raw=true)
+![Alt text](./screen-shots/chart.png?raw=true)
+![Alt text](./screen-shots/table.png?raw=true)
