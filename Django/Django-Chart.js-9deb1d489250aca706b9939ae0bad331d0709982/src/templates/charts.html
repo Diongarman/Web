@@ -4,9 +4,41 @@
 
 
 {% block jquery %}
+
+    //endpoints
     var type_endpoint =  'api/pokemon_chart/data/';
     var table_endpoint =  'api/table/data/';
 
+    //table setting
+    function setDataTable(data, columns) {
+        $('#example').DataTable({
+            data: data, <!-- trying to use the passed in variable-->
+            columns: columns,
+            scrollX: true
+
+
+        })
+    }
+
+    //chart setting
+    function setPolarChart(config) {
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, config);
+
+    }
+    function setBarChart(config) {
+        var ctx = document.getElementById("myChart2");
+        var myChart = new Chart(ctx, config);
+    }
+    function setPolarChart2(config) {
+        var ctx = document.getElementById("myChartType2");
+        var myChart = new Chart(ctx, config);
+    }
+    function setBarChart2(config) {
+        var ctx = document.getElementById("myChart2Type2");
+        var myChart = new Chart(ctx, config);
+    }
+    //chart formatting
     function addBackgroundColors(chartConfig) {
         if (chartConfig && chartConfig.data && chartConfig.data.datasets) {
             labels = chartConfig.data.labels;
@@ -89,19 +121,20 @@
         return chartConfig;
     }
 
+
+
     $.ajax({
         method:"GET",
         url: type_endpoint,
         success: function(data){
-            labels = data.types;
-            defaultData = data.type_counts;
-            chartConfig = {
+
+            var typ1ChartConfig = {
                     type: 'bar',
                     data: {
-                        labels: labels,
+                        labels: data.types ,
                         datasets: [{
                             label: 'Type Counts',
-                            data: defaultData,
+                            data: data.type_counts,
                             backgroundColor: [
 
 
@@ -122,13 +155,13 @@
                         }
                       }
                 };
-            polarChartConfig = {
+            var type1PolarChartConfig = {
             type: 'polarArea',
             data: {
-                labels: labels,
+                labels: data.types,
                 datasets: [{
                     label: 'Type Counts',
-                    data: defaultData,
+                    data: data.type_counts,
                     backgroundColor: [
 
                     ],
@@ -148,10 +181,70 @@
                 }
             }
         }
-            chartConfigUpdate = addBackgroundColors(chartConfig);
-            polarChartConfigUpdate = addBackgroundColors(polarChartConfig);
+            var chartConfigUpdate = addBackgroundColors(typ1ChartConfig);
+            var polarChartConfigUpdate = addBackgroundColors(type1PolarChartConfig);
+
             setPolarChart(polarChartConfigUpdate);
             setBarChart(chartConfigUpdate);
+
+            var typ2ChartConfig = {
+                    type: 'bar',
+                    data: {
+                        labels: data.types2 ,
+                        datasets: [{
+                            label: 'Type Counts',
+                            data: data.type2_counts,
+                            backgroundColor: [
+
+
+                            ],
+                            borderColor: [
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                  options: {
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              beginAtZero: true
+                            }
+                          }]
+                        }
+                      }
+                };
+            var type2PolarChartConfig = {
+            type: 'polarArea',
+            data: {
+                labels: data.types2,
+                datasets: [{
+                    label: 'Type Counts',
+                    data: data.type2_counts,
+                    backgroundColor: [
+
+                    ],
+                    borderColor: [
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        };
+            var chart2ConfigUpdate = addBackgroundColors(typ2ChartConfig);
+            var polar2ChartConfigUpdate = addBackgroundColors(type2PolarChartConfig);
+
+            setPolarChart2(polar2ChartConfigUpdate);
+            setBarChart2(chart2ConfigUpdate);
 
         },
         error: function(error_data) {
@@ -165,20 +258,9 @@
         dataType: "json",
 
         success: function(data){
-            console.log('table works')
-
-            pokemon = data['data'].replace(/\\n/g, "\\n")
-                   .replace(/\\'/g, "\\'")
-                   .replace(/\\"/g, '\\"')
-                   .replace(/\\&/g, "\\&")
-                   .replace(/\\r/g, "\\r")
-                   .replace(/\\t/g, "\\t")
-                   .replace(/\\b/g, "\\b")
-                   .replace(/\\f/g, "\\f");
-            pokemon = JSON.parse(pokemon.replace(/[\u0000-\u0019]+/g,""));
-            console.log(pokemon);
-            console.log(typeof(pokemon));
-            setDataTable();
+            var pokemon = JSON.parse(data['data']);
+            var columns = data['columns'];
+            setDataTable(pokemon, columns);
 
         },
         error: function(error_data) {
@@ -187,50 +269,7 @@
         }
     });
 
-    function setPolarChart(config) {
-        var ctx = document.getElementById("myChart");
-        var myChart = new Chart(ctx, config);
-    }
-    function setBarChart(config) {
-        var ctx = document.getElementById("myChart2");
-        var myChart = new Chart(ctx, config);
-    }
-    function setDataTable() {
-        $('#example').DataTable({
-            data: pokemon, <!-- trying to use the passed in variable-->
-            columns: [
-                            { title: "Name" },
-                { title: "Position" },
-                { title: "Office" },
-                { title: "Extn." },
-                { title: "Start date" },
-                { title: "Salary" },
-                            { title: "Name1" },
-                { title: "Position1" },
-                { title: "Office1" },
-                { title: "Extn.1" },
-                { title: "Start date1" },
-                { title: "Salary1" },
-                            { title: "Name2" },
-                { title: "Position2" },
-                { title: "Office2" },
-                { title: "Extn.2" },
-                { title: "Start date2" },
-                { title: "Salary2" },
-                            { title: "Name3" },
-                { title: "Position3" },
-                { title: "Office3" },
-                { title: "Extn.3" },
-                { title: "Start date3" },
-                { title: "Salary3" }
 
-
-                ],
-            scrollX: true
-
-
-        })
-    }
 
 {% endblock %}
 
@@ -252,6 +291,19 @@
             </div>
             <div class="col-sm-6">
                 <canvas id="myChart2" width="400" height="400"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <div class='row'>
+        <div class='col-sm-12'>
+            <h1>Type2 Counts</h1>
+            <div class="col-sm-6">
+                <canvas id="myChartType2" width="400" height="400"></canvas>
+            </div>
+            <div class="col-sm-6">
+                <canvas id="myChart2Type2" width="400" height="400"></canvas>
             </div>
         </div>
 

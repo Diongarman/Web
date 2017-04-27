@@ -13,3 +13,8 @@ http://stackoverflow.com/questions/35523635/extract-values-in-pandas-value-count
 
 configuring charts.js category colours
 http://stackoverflow.com/questions/37144864/can-the-colors-of-bars-in-a-bar-chart-be-varied-based-on-their-value
+
+js.replace() removing all non-alphanumerical values including underscore
+text.replace(/[\W_]+/g," ");
+
+http://stackoverflow.com/questions/20864893/javascript-replace-all-non-alpha-numeric-characters-new-lines-and-multiple-whi
