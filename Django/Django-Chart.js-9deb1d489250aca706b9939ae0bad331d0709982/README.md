@@ -1,8 +1,12 @@
-![Django + Charts.js Logo](https://cfe2-static.s3-us-west-2.amazonaws.com/media/projects/django-chartjs/images/share/django_plus_charts_js_share.png)
+About
 
-# Django + Charts.js
-Learn how to integrate Charts.js with Django
+This is a mini project I have conceptualised to help learn the Django frame work, sharpen up on Statistical Analysis and to learn effective Data Visualisation. I am using public Pokemon datasets provided by on Kaggle (https://www.kaggle.com/mylesoneill/pokemon-sun-and-moon-gen-7-stats). To deal with the data on the server side I am using Pandas/Numpy and to visualise the data I am using DataTables, Charts.js and HighCharts.
 
-### Lectures
-[Base project setup](../../tree/4acc45c9fcebedebeae3675cc5930ce98ad9027f)
+The project is being developed continuously; for those who are interested the main action in the code, in my opinion, takes place in the following files:
+    1) src --> charts --> views.py
+    2) src --> templates --> charts.html
 
+I will eventually tidy things up and take the javascript out of charts.html.
+
+![Alt text](/screen-shots/chart.png?raw=true)
+![Alt text](/screen-shots/table.png?raw=true)
