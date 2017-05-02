@@ -18,3 +18,17 @@ js.replace() removing all non-alphanumerical values including underscore
 text.replace(/[\W_]+/g," ");
 
 http://stackoverflow.com/questions/20864893/javascript-replace-all-non-alpha-numeric-characters-new-lines-and-multiple-whi
+
+csv reader
+http://stackoverflow.com/questions/14257373/skip-the-headers-when-editing-a-csv-file-using-python
+
+stacker bars charts.js
+
+https://jsfiddle.net/chanonroy/9xrb0vhe/
+
+
+inspiration
+moves view
+    https://pokemondb.net/move/generation/7
+pokemon individual views
+    https://pokemon.pikasaur.com/l/498/Tepig

@@ -9,11 +9,14 @@ import pandas as pd
 #json formatting
 import json
 
+import csv
+
 #File Paths
 from settings import BASE_DIR
 
 #GLOBALS
 pokemon_csv = BASE_DIR + '/pokemon-sun-and-moon-gen-7-stats/pokemon.csv'
+moves_csv = BASE_DIR + '/pokemon-sun-and-moon-gen-7-stats/moves.csv'
 
 #HomeView contains ajax api calls to TableData and PokemonChartData
 class HomeView(View):
@@ -26,8 +29,6 @@ class TableData(APIView):
     authentication_classes = []
     permission_classes = []
 
-
-
     def get(self, request, format=None):
         df = pd.read_csv(pokemon_csv, header=None).fillna('N/A').values.tolist()
 
@@ -38,7 +39,6 @@ class TableData(APIView):
             "data": pokemon,
             "columns": header
         }
-
 
         return Response(data)
 
@@ -61,7 +61,43 @@ class PokemonChartData(APIView):
             "type2_counts": type2_counts
         }
 
+        return Response(data)
+
+
+class PokemonMovesChartData(APIView):
+
+
+    def get(self, request, format=None):
+
+        result = {}
+        with open(moves_csv, 'rb') as moves:
+            csvreader = csv.reader(moves, delimiter=',')
+            next(csvreader, None)
+            for row in csvreader:
+                if row[3] in result:
+                    if row[4] in result[row[3]]:
+                        result[row[3]][row[4]] += 1
+
+                    else:
+                        result[row[3]][row[4]] = 1
+                else:
+                    result[row[3]] = {}
+                    result[row[3]][row[4]] = 1
+
+        types = result.keys()
+        status = [result[x]['Status'] for x in result]
+        special = [result[x]['Special'] for x in result]
+        physical = [result[x]['Physical'] for x in result]
+
+        data = {
+            'types': types,
+            'special': special,
+            'status': status,
+            'physical': physical
+
+        }
 
         return Response(data)
+
 
 
