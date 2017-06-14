@@ -9,7 +9,7 @@
     var type_endpoint =  'api/pokemon_chart/data/';
     var table_endpoint =  'api/table/data/';
     var moves_endpoint =  'api/moves_chart/data/';
-
+//Helper Functions
     //table setting
     function setDataTable(data, columns) {
         $('#example').DataTable({
@@ -20,8 +20,7 @@
 
         })
     }
-
-    //chart setting
+        //chart setting utilities
     function setPolarChart(config) {
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, config);
@@ -135,7 +134,7 @@
         url: type_endpoint,
         success: function(data){
 
-            //chart config objects
+            //chart config objects, buckets to fill with data from ajax call
             var typ1ChartConfig = {
                     type: 'bar',
                     data: {
@@ -192,10 +191,11 @@
             var chartConfigUpdate = addBackgroundColors(typ1ChartConfig);
             var polarChartConfigUpdate = addBackgroundColors(type1PolarChartConfig);
 
+            //setter functions utilised
             setPolarChart(polarChartConfigUpdate);
             setBarChart(chartConfigUpdate);
 
-            //chart config objects
+            //chart config objects, buckets to fill with data from ajax call
             var typ2ChartConfig = {
                     type: 'bar',
                     data: {

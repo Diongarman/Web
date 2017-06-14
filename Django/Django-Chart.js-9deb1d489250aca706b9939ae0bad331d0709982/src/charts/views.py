@@ -18,11 +18,14 @@ from settings import BASE_DIR
 pokemon_csv = BASE_DIR + '/pokemon-sun-and-moon-gen-7-stats/pokemon.csv'
 moves_csv = BASE_DIR + '/pokemon-sun-and-moon-gen-7-stats/moves.csv'
 
-#HomeView contains ajax api calls to TableData and PokemonChartData
+#HomeView contains ajax api calls to TableData and PokemonChartData etc.
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'charts.html')
 
+class MovesView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'moves.html')
 
 class TableData(APIView):
 

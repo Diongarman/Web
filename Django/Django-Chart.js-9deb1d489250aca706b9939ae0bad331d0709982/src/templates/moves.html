@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+<script>
+{% block jquery %}
+    var moves_endpoint =  'api/moves_chart/data/';
+
+    function setMovesBarChart(config) {
+        var bar_ctx = document.getElementById('move-Type-CategoryChart');
+        var bar_chart = new Chart(bar_ctx,config)
+    }
+    $.ajax({
+        method:"GET",
+        url: moves_endpoint,
+        success: function(data){
+            function numberWithCommas(x) {return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");};
+
+            var types = data.types;
+            var special = data.special;
+            var status = data.status;
+            var physical = data.physical;
+
+            //chart config objects
+            var movesChartConfig = {
+                type: 'bar',
+                data: {
+                    labels: types,
+                    datasets: [
+                    {
+                        label: 'special',
+                        data: special,
+                                    backgroundColor: "rgba(100, 88, 159, 0.7)",
+                                    hoverBackgroundColor: "rgba(100, 88, 159, 0.7)",
+                                    hoverBorderWidth: 2,
+                                    hoverBorderColor: 'lightgrey'
+                    },
+                    {
+                        label: 'status',
+                        data: status,
+                                    backgroundColor: "rgba(150,150,150, 0.7)",
+                                    hoverBackgroundColor: "rgba(150,150,150, 0.7)",
+                                    hoverBorderWidth: 2,
+                                    hoverBorderColor: 'lightgrey'
+                    },
+
+                    {
+                        label: 'physical',
+                        data: physical,
+                                    backgroundColor: "rgba(225, 58, 55, 0.7)",
+                                    hoverBackgroundColor: "rgba(225, 58, 55, 0.7)",
+                                    hoverBorderWidth: 2,
+                                    hoverBorderColor: 'lightgrey'
+                    },
+                    ]
+                },
+                options: {
+                        animation: {
+                        duration: 10,
+                    },
+                    tooltips: {
+                                mode: 'label',
+                      callbacks: {
+                      label: function(tooltipItem, data) {
+                        return data.datasets[tooltipItem.datasetIndex].label + ": " + numberWithCommas(tooltipItem.yLabel);
+                      }
+                      }
+                     },
+                    scales: {
+                      xAxes: [{
+                        stacked: true,
+                        gridLines: { display: false },
+                        }],
+                      yAxes: [{
+                        stacked: true,
+                        ticks: {
+                                callback: function(value) { return numberWithCommas(value); },
+                                },
+                        }],
+                    }, // scales
+                    legend: {display: true}
+                } // options
+               };
+            setMovesBarChart(movesChartConfig);
+
+        },
+        error: function(error_data) {
+            console.log("error");
+            console.log(error_data);
+        }
+    });
+
+{% endblock %}
+
+</script>
+
+{% block content %}
+    <div class='row'>
+        <div class='col-sm-12'>
+            <h1>Move Types-Categories</h1>
+                <canvas id="move-Type-CategoryChart" width="400" height="150"></canvas>
+        </div>
+
+    </div>
+
+{% endblock content %}
+

@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from .views import HomeView, TableData, PokemonChartData, PokemonMovesChartData
+from .views import HomeView,MovesView, TableData, PokemonChartData, PokemonMovesChartData
 
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^moves', MovesView.as_view(), name='moves'),
     url(r'^api/table/data/$', TableData.as_view(), name='api-table-data'),
     url(r'^api/pokemon_chart/data/$', PokemonChartData.as_view(), name='api-pokemon_chart-data'),
     url(r'^api/moves_chart/data/$', PokemonMovesChartData.as_view(), name='api-moves_chart-data'),
